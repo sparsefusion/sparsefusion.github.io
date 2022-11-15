@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Sparse view reconstruction via diffusion distillation.">
+  <meta name="keywords" content="Sparse view, reconstruction, diffusion, NeRF">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SparseFusion: Distilling View-conditioned Diffusion for 3D Reconstruction</title>
+
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="index.html">
+      <span class="icon">
+          <i class="fas fa-home"></i>
+      </span>
+      </a>
+
+      <!-- <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More Research
+        </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="#">
+            #
+          </a>
+          <a class="navbar-item" href="#">
+            #
+          </a>
+          <a class="navbar-item" href="#">
+            #
+          </a>
+          <a class="navbar-item" href="#">
+            #
+          </a>
+        </div>
+      </div> -->
+    </div>
+
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">SparseFusion: Distilling View-conditioned Diffusion for 3D Reconstruction</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="#">Anonymous Submission</a><sup>1</sup>,</span>
+            <!-- <span class="author-block">
+              <a href="#">Anonymous Submission</a><sup>1</sup>,</span> -->
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>Affiliation</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <!-- <span class="link-block">
+                <a href="#"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span> -->
+              <!-- <span class="link-block">
+                <a href="#"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span> -->
+              <!-- Video Link. -->
+              <!-- <span class="link-block">
+                <a href="#"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span> -->
+              <!-- Code Link. -->
+              <!-- <span class="link-block">
+                <a href="#"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span> -->
+              <!-- Dataset Link. -->
+              <!-- <span class="link-block">
+                <a href="https://github.com/google/nerfies/releases/tag/0.1"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="far fa-images"></i>
+                  </span>
+                  <span>Data</span>
+                  </a> -->
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <video id="teaser" autoplay muted loop playsinline height="100%">
+        <source src="https://i.imgur.com/DoEidnk.mp4"
+                type="video/mp4">
+      </video>
+      <h2 class="subtitle has-text-centered">
+        SparseFusion reconstructs a consistent and realistic 3D scene representation from as few as 2 input images with known relative pose. 
+      </h2>
+    </div>
+  </div>
+</section>
+
+
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item item-steve">
+          <video poster="" id="steve" autoplay muted loop playsinline height="100%">
+            <source src="https://i.imgur.com/DoEidnk.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-chair-tp">
+          <video poster="" id="chair-tp" autoplay muted loop playsinline height="100%">
+            <source src="https://homes.cs.washington.edu/~kpar/nerfies/videos/chair-tp.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-shiba">
+          <video poster="" id="shiba" autoplay muted loop playsinline height="100%">
+            <source src="https://homes.cs.washington.edu/~kpar/nerfies/videos/shiba.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-fullbody">
+          <video poster="" id="fullbody" autoplay muted loop playsinline height="100%">
+            <source src="https://homes.cs.washington.edu/~kpar/nerfies/videos/fullbody.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <!-- <div class="item item-blueshirt">
+          <video poster="" id="blueshirt" autoplay controls muted loop playsinline height="100%">
+            <source src="https://homes.cs.washington.edu/~kpar/nerfies/videos/blueshirt.mp4"
+                    type="video/mp4">
+          </video>
+        </div> -->
+        <!-- <div class="item item-mask">
+          <video poster="" id="mask" autoplay controls muted loop playsinline height="100%">
+            <source src="https://homes.cs.washington.edu/~kpar/nerfies/videos/mask.mp4"
+                    type="video/mp4">
+          </video>
+        </div> -->
+        <!-- <div class="item item-coffee">
+          <video poster="" id="coffee" autoplay controls muted loop playsinline height="100%">
+            <source src="https://homes.cs.washington.edu/~kpar/nerfies/videos/coffee.mp4"
+                    type="video/mp4">
+          </video>
+        </div> -->
+        <!-- <div class="item item-toby">
+          <video poster="" id="toby" autoplay controls muted loop playsinline height="100%">
+            <source src="https://homes.cs.washington.edu/~kpar/nerfies/videos/toby2.mp4"
+                    type="video/mp4">
+          </video>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            We propose <em>SparseFusion</em>, a sparse view 3D reconstruction approach that unifies recent advances in neural rendering and probabilistic image generation.
+          </p>
+          <p>
+            Existing approaches typically build on neural rendering with re-projected features but fail to generate unseen regions or handle uncertainty under large viewpoint changes. Alternate methods treat this as a (probabilistic) 2D synthesis task, and while they can generate plausible 2D images, they do not infer a consistent underlying 3D. However, we find that this trade-off between 3D consistency and probabilistic image generation does not need to exist. In fact, we show that geometric consistency and generative inference can be complementary in a mode seeking behavior.
+          </p>
+          <p>
+            By distilling a 3D consistent scene representation from a view-conditioned latent diffusion model, we are able to recover a plausible 3D representation whose renderings are both accurate and realistic. We evaluate our approach across 51 categories in the CO3D dataset and show that it outperforms existing methods, in both distortion and perception metrics, for sparse view novel view synthesis.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+    <!-- Paper video. -->
+    <!-- <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Video</h2>
+        <div class="publication-video">
+          <iframe src="https://www.youtube.com/embed/MrKrnHhk8IA?rel=0&amp;showinfo=0"
+                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div> -->
+    <!--/ Paper video. -->
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <div class="columns is-centered">
+
+      <!-- Visual Effects. -->
+      <!-- <div class="column">
+        <div class="content">
+          <h2 class="title is-3">Left</h2>
+          <p>
+            p
+          </p>
+          <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
+            <source src="#"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div> -->
+      <!--/ Visual Effects. -->
+
+      <!-- Matting. -->
+      <!-- <div class="column">
+        <h2 class="title is-3">Right</h2>
+        <div class="columns is-centered">
+          <div class="column content">
+            <p>
+              p
+            </p>
+            <video id="matting-video" controls playsinline height="100%">
+              <source src=""
+                      type="video/mp4">
+            </video>
+          </div>
+
+        </div>
+      </div>
+    </div> -->
+    <!--/ Matting. -->
+
+    <!-- Animation. -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Results</h2>
+
+        <!-- Subsection. -->
+        <h3 class="title is-4">Comparison Against Existing Methods</h3>
+        <div class="content has-text-justified">
+          <p>
+            We compare novel view synthesis on 10 categories from CO3D. Please see randomly selected results from all 51 categories <a href="#">here</a>. 
+          </p>
+        </div>
+        <div class="content has-text-centered">
+          <video id="replay-video"
+                 controls
+                 muted
+                 preload
+                 playsinline
+                 width="75%">
+            <source src="https://homes.cs.washington.edu/~kpar/nerfies/videos/replay.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <!--/ Subsection. -->
+
+        <!-- Subsection. -->
+        <h3 class="title is-4">Varying Number of Input Views</h3>
+        <div class="content has-text-justified">
+          <p>
+            We compare novel view synthesis with varying number of input views. Please see randomly selected results from 10 categories <a href="#">here</a>. 
+          </p>
+        </div>
+        <div class="content has-text-centered">
+          <video id="replay-video"
+                 controls
+                 muted
+                 preload
+                 playsinline
+                 width="75%">
+            <source src="https://homes.cs.washington.edu/~kpar/nerfies/videos/replay.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <!--/ Subsection. -->
+
+        <!-- Subsection. -->
+        <h3 class="title is-4">Diverse Reconstruction</h3>
+        <div class="content has-text-justified">
+          <p>
+            We show novel view synthesis results on diverse categories. Please see randomly selected results from all 51 categories <a href="#">here</a>. 
+          </p>
+        </div>
+        <div class="content has-text-centered">
+          <video id="replay-video"
+                 controls
+                 muted
+                 preload
+                 playsinline
+                 width="75%">
+            <source src="https://homes.cs.washington.edu/~kpar/nerfies/videos/replay.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <!--/ Subsection. -->
+
+      </div>
+    </div>
+    <!--/ Animation. -->
+
+
+    <!-- Concurrent Work. -->
+    <!-- <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Related Links</h2>
+
+        <div class="content has-text-justified">
+        </div>
+      </div>
+    </div>
+    </div> -->
+
+</section>
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{ ,
+  author    = { },
+  title     = { },
+  journal   = { },
+  year      = { },
+}</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link"
+         href="#">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="#" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is from from this template <a href="https://github.com/nerfies/nerfies.github.io">source code</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

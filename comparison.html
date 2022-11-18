@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Sparse view reconstruction via diffusion distillation.">
+  <meta name="keywords" content="Sparse view, reconstruction, diffusion, NeRF">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SparseFusion: Distilling View-conditioned Diffusion for 3D Reconstruction</title>
+
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="index.html">
+      <span class="icon">
+          <i class="fas fa-home"></i>
+      </span>
+      </a>
+    </div>
+
+  </div>
+</nav>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <div class="columns is-centered">
+
+    <!-- Animation. -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Results on 10 Categories</h2>
+
+        <!-- Subsection. -->
+        <h3 class="title is-4">Random Comparisons on 10 Categories</h3>
+        <div class="content has-text-justified">
+          <p>
+            We select one random scene per category and show comparison against PixelNeRF, NerFormer, and ViewFormer. 
+          </p>
+        </div>
+        <div class="content has-text-centered">
+          <video class="rounded" id=""
+                 controls
+                 autoplay
+                 loop
+                 muted
+                 playsinline
+                 width="75%">
+            <source src="static/images/comp_a10_0.webm"
+                    type="video/webm">
+          </video>
+          <video class="rounded" id=""
+                 controls
+                 autoplay
+                 loop
+                 muted
+                 playsinline
+                 width="75%">
+            <source src="static/images/comp_a10_1.webm"
+                    type="video/webm">
+          </video>
+        </div>
+        <!--/ Subsection. -->
+
+        <!-- Subsection. -->
+        <h3 class="title is-4" id="views">Random Comparisons on 10 Categories with Varying Views</h3>
+        <div class="content has-text-justified">
+          <p>
+            We select one random scene per category and show results with varying number of input views. 
+          </p>
+        </div>
+        <div class="content has-text-centered">
+          <video id="replay-video"
+                 controls
+                 muted
+                 preload
+                 playsinline
+                 width="75%">
+            <source src="static/images/comp_v10_0.webm"
+                    type="video/webm">
+          </video>
+          <video id="replay-video"
+                 controls
+                 muted
+                 preload
+                 playsinline
+                 width="75%">
+            <source src="static/images/comp_v10_1.webm"
+                    type="video/webm">
+          </video>
+          <video id="replay-video"
+                 controls
+                 muted
+                 preload
+                 playsinline
+                 width="75%">
+            <source src="static/images/comp_v10_2.webm"
+                    type="video/webm">
+          </video>
+          <video id="replay-video"
+                 controls
+                 muted
+                 preload
+                 playsinline
+                 width="75%">
+            <source src="static/images/comp_v10_3.webm"
+                    type="video/webm">
+          </video>
+          <video id="replay-video"
+                 controls
+                 muted
+                 preload
+                 playsinline
+                 width="75%">
+            <source src="static/images/comp_v10_4.webm"
+                    type="video/webm">
+          </video>
+        </div>
+        <!--/ Subsection. -->
+
+      </div>
+    </div>
+    <!--/ Animation. -->
+
+    <!-- Animation. -->
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <div class="columns is-centered">
+
+    <!-- Animation. -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 id="all" class="title is-3">Results on All Categories</h2>
+
+        <!-- Subsection. -->
+        <h3 class="title is-4">Random Comparisons on All Categories</h3>
+        <div class="content has-text-justified">
+          <p>
+            We select one random scene per category and show comparison against NerFormer and ViewFormer. 
+          </p>
+        </div>
+        <div class="content has-text-centered">
+          <video class="rounded" id=""
+                 controls
+                 autoplay
+                 loop
+                 muted
+                 playsinline
+                 width="75%">
+            <source src="static/images/comp_a51_0.webm"
+                    type="video/webm">
+          </video>
+          <video class="rounded" id=""
+                 controls
+                 autoplay
+                 loop
+                 muted
+                 playsinline
+                 width="75%">
+            <source src="static/images/comp_a51_1.webm"
+                    type="video/webm">
+          </video>
+          <video class="rounded" id=""
+                 controls
+                 autoplay
+                 loop
+                 muted
+                 playsinline
+                 width="75%">
+            <source src="static/images/comp_a51_2.webm"
+                    type="video/webm">
+          </video>
+          <video class="rounded" id=""
+                 controls
+                 autoplay
+                 loop
+                 muted
+                 playsinline
+                 width="75%">
+            <source src="static/images/comp_a51_3.webm"
+                    type="video/webm">
+          </video>
+          <video class="rounded" id=""
+                 controls
+                 autoplay
+                 loop
+                 muted
+                 playsinline
+                 width="75%">
+            <source src="static/images/comp_a51_4.webm"
+                    type="video/webm">
+          </video>
+          <video class="rounded" id=""
+                 controls
+                 autoplay
+                 loop
+                 muted
+                 playsinline
+                 width="75%">
+            <source src="static/images/comp_a51_5.webm"
+                    type="video/webm">
+          </video>
+          <video class="rounded" id=""
+                 controls
+                 autoplay
+                 loop
+                 muted
+                 playsinline
+                 width="75%">
+            <source src="static/images/comp_a51_6.webm"
+                    type="video/webm">
+          </video>
+          <video class="rounded" id=""
+                 controls
+                 autoplay
+                 loop
+                 muted
+                 playsinline
+                 width="75%">
+            <source src="static/images/comp_a51_7.webm"
+                    type="video/webm">
+          </video>
+          <video class="rounded" id=""
+                 controls
+                 autoplay
+                 loop
+                 muted
+                 playsinline
+                 width="75%">
+            <source src="static/images/comp_a51_8.webm"
+                    type="video/webm">
+          </video>
+          <video class="rounded" id=""
+                 controls
+                 autoplay
+                 loop
+                 muted
+                 playsinline
+                 width="75%">
+            <source src="static/images/comp_a51_9.webm"
+                    type="video/webm">
+          </video>
+          
+        </div>
+        <!--/ Subsection. -->
+
+      </div>
+    </div>
+    <!--/ Animation. -->
+
+    <!-- Animation. -->
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link"
+         href="#">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="#" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is from from this template <a href="https://github.com/nerfies/nerfies.github.io">source code</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

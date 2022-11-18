@@ -136,6 +136,20 @@
                   </span>
                   <span>Data</span>
                   </a> -->
+              <span class="link-block">
+                <a href="diverse.html"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span>Random Results</span>
+                  </a>
+              </span>
+
+              <span class="link-block">
+                <a href="comparison.html"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span>Random Comparisons</span>
+                  </a>
+              </span>
+
             </div>
 
           </div>
@@ -149,8 +163,10 @@
   <div class="container is-max-desktop">
     <div class="hero-body">
       <video id="teaser" autoplay muted loop playsinline height="100%">
-        <source src="https://i.imgur.com/DoEidnk.mp4"
-                type="video/mp4">
+        <!-- <source src="https://i.imgur.com/DoEidnk.mp4"
+                type="video/mp4"> -->
+        <source src="static/images/teaser.webm"
+        type="video/webm">
       </video>
       <h2 class="subtitle has-text-centered">
         SparseFusion reconstructs a consistent and realistic 3D scene representation from as few as 2 input images with known relative pose. 
@@ -166,32 +182,32 @@
       <div id="results-carousel" class="carousel results-carousel">
         <div class="item item-steve">
           <video poster="" id="steve" autoplay muted loop playsinline height="100%">
-            <source src="https://i.imgur.com/WxSdde3.mp4"
-                    type="video/mp4">
+            <source src="static/images/focus-hydrant.webm"
+                    type="video/webm">
           </video>
         </div>
         <div class="item item-chair-tp">
           <video poster="" id="chair-tp" autoplay muted loop playsinline height="100%">
-            <source src="https://i.imgur.com/QGNTpE8.mp4"
-                    type="video/mp4">
+            <source src="static/images/focus-teddybear.webm"
+                    type="video/webm">
           </video>
         </div>
         <div class="item item-shiba">
           <video poster="" id="shiba" autoplay muted loop playsinline height="100%">
-            <source src="https://i.imgur.com/wHJ5k37.mp4"
-                    type="video/mp4">
+            <source src="static/images/focus-plant.webm"
+                    type="video/webm">
           </video>
         </div>
         <div class="item item-fullbody">
           <video poster="" id="fullbody" autoplay muted loop playsinline height="100%">
-            <source src="https://i.imgur.com/ju6CG10.mp4"
-                    type="video/mp4">
+            <source src="static/images/focus-suitcase.webm"
+                    type="video/webm">
           </video>
         </div>
         <div class="item item-a">
           <video poster="" id="a" autoplay muted loop playsinline height="100%">
-            <source src="https://i.imgur.com/3D3c4JT.mp4"
-                    type="video/mp4">
+            <source src="static/images/focus-donut.webm"
+                    type="video/webm">
           </video>
         </div>
         <!-- <div class="item item-blueshirt">
@@ -308,18 +324,19 @@
         <h3 class="title is-4">Comparison Against Existing Methods</h3>
         <div class="content has-text-justified">
           <p>
-            We compare novel view synthesis on 10 categories from CO3D. Please see randomly selected results from all 51 categories <a href="#">here</a>. 
+            We compare novel view synthesis on 10 categories from CO3D. Please see randomly selected results from all 51 categories <a href="comparison.html#all">here</a>. 
           </p>
         </div>
         <div class="content has-text-centered">
-          <video id="replay-video"
+          <video class="rounded" id=""
                  controls
+                 autoplay
+                 loop
                  muted
-                 preload
                  playsinline
                  width="75%">
-            <source src="https://homes.cs.washington.edu/~kpar/nerfies/videos/replay.mp4"
-                    type="video/mp4">
+            <source src="static/images/comparison-a.webm"
+                    type="video/webm">
           </video>
         </div>
         <!--/ Subsection. -->
@@ -328,18 +345,20 @@
         <h3 class="title is-4">Varying Number of Input Views</h3>
         <div class="content has-text-justified">
           <p>
-            We compare novel view synthesis with varying number of input views. Please see randomly selected results from 10 categories <a href="#">here</a>. 
+            We compare novel view synthesis with varying number of input views. Please see randomly selected results from 10 categories <a href="comparison.html#views">here</a>. 
           </p>
         </div>
         <div class="content has-text-centered">
-          <video id="replay-video"
+          <video class="rounded" id="replay-video"
                  controls
+                 autoplay
+                 loop
                  muted
                  preload
                  playsinline
                  width="75%">
-            <source src="https://homes.cs.washington.edu/~kpar/nerfies/videos/replay.mp4"
-                    type="video/mp4">
+            <source src="static/images/comp_v10_core.webm"
+                    type="video/webm">
           </video>
         </div>
         <!--/ Subsection. -->
@@ -348,18 +367,20 @@
         <h3 class="title is-4">Diverse Reconstruction</h3>
         <div class="content has-text-justified">
           <p>
-            We show novel view synthesis results on diverse categories. Please see randomly selected results from all 51 categories <a href="#">here</a>. 
+            We show novel view synthesis results on diverse categories. Please see randomly selected results from all 51 categories <a href="diverse.html">here</a>. 
           </p>
         </div>
         <div class="content has-text-centered">
-          <video id="replay-video"
+          <video class="rounded" id="replay-video"
                  controls
+                 autoplay
+                 loop
                  muted
                  preload
                  playsinline
                  width="75%">
-            <source src="https://homes.cs.washington.edu/~kpar/nerfies/videos/replay.mp4"
-                    type="video/mp4">
+            <source src="static/images/focus-diverse.webm"
+                    type="video/webm">
           </video>
         </div>
         <!--/ Subsection. -->
